@@ -4,6 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Authors>Giorgi Kulijanishvili</Authors>
+    <PackageProjectUrl>https://github.com/giorgi-kul/sms-office-client</PackageProjectUrl>
+    <Title>SmsOffice .NET Library</Title>
+    <Description>.NET Library for sending SMS via smsoffice.ge</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
