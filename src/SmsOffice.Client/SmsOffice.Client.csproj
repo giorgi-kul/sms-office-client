@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/giorgi-kul/sms-office-client</PackageProjectUrl>
     <Title>SmsOffice .NET Library</Title>
     <Description>.NET Library for sending SMS via smsoffice.ge</Description>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
