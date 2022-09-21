@@ -5,7 +5,7 @@ using SmsOffice.Client;
 using SmsOffice.Client.Interfaces;
 using SmsOffice.Client.Models;
 
-SmsOfficeClientOptions options = new();
+SmsOfficeClientOptions _options = new();
 using IHost host = Host.CreateDefaultBuilder(args)
     .ConfigureAppConfiguration((hostingContext, configuration) =>
     {
@@ -13,13 +13,16 @@ using IHost host = Host.CreateDefaultBuilder(args)
 
         IConfigurationRoot configurationRoot = configuration.Build();
 
-        configurationRoot.GetSection("SmsOffice").Bind(options);
+        configurationRoot.GetSection("SmsOffice").Bind(_options);
     })
     .ConfigureServices((_, services) =>
     {
-        services.AddHttpClient();
-        services.AddScoped<ISmsOfficeClient, SmsOfficeClient>();
-        services.AddScoped(opt => options);
+        services.AddSmsOffice(opt =>
+        {
+            opt.BaseUrl = "http://smsoffice.ge/api";
+            opt.ApiKey = "04308629d00c4bf7a1002e94d1e6462a";
+        });
+
     })
     .Build();
 

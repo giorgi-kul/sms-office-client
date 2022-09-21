@@ -1,4 +1,5 @@
-﻿using SmsOffice.Client.Extensions;
+﻿using Microsoft.Extensions.Options;
+using SmsOffice.Client.Extensions;
 using SmsOffice.Client.Interfaces;
 using SmsOffice.Client.Models;
 using System.Net.Http.Json;
@@ -14,10 +15,10 @@ namespace SmsOffice.Client
 
 
         public SmsOfficeClient(
-            HttpClient httpClient,
-            SmsOfficeClientOptions options)
+           HttpClient httpClient,
+           IOptions<SmsOfficeClientOptions> options)
         {
-            _options = options;
+            _options = options.Value;
             _httpClient = httpClient;
         }
 
