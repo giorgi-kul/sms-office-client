@@ -20,16 +20,16 @@ using IHost host = Host.CreateDefaultBuilder(args)
         services.AddSmsOffice(opt =>
         {
             opt.BaseUrl = "http://smsoffice.ge/api";
-            opt.ApiKey = "04308629d00c4bf7a1002e94d1e6462a";
+            opt.ApiKey = "";
         });
 
     })
     .Build();
-
-HttpClient httpClient = host.Services.GetRequiredService<HttpClient>();
 
 ISmsOfficeClient smsOfficeClient = host.Services.GetRequiredService<ISmsOfficeClient>();
 
 SendSmsResult sendSmsResult = await smsOfficeClient.SendSms("TestApp", "595161617", "test2");
 
 int balanceResult = await smsOfficeClient.GetBalance();
+
+Console.ReadKey();
