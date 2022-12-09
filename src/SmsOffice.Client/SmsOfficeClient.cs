@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Options;
+using RestEase;
 using SmsOffice.Client.Extensions;
 using SmsOffice.Client.Interfaces;
 using SmsOffice.Client.Models;
@@ -11,15 +12,14 @@ namespace SmsOffice.Client
     public class SmsOfficeClient : ISmsOfficeClient
     {
         private readonly SmsOfficeClientOptions _options;
-        private readonly HttpClient _httpClient;
+        private readonly ISmsOfficeApi _api;
 
 
         public SmsOfficeClient(
-           HttpClient httpClient,
            IOptions<SmsOfficeClientOptions> options)
         {
             _options = options.Value;
-            _httpClient = httpClient;
+            _api = RestClient.For<ISmsOfficeApi>(_options.BaseUrl);
         }
 
         public async Task<SendSmsResult> SendSms(string senderName, string receiverPhoneNumber, string text)
@@ -39,33 +39,12 @@ namespace SmsOffice.Client
                 throw new ArgumentNullException(nameof(text));
             }
 
-            var queryParams = new Dictionary<string, string>
-            {
-                { "key", _options.ApiKey },
-                { "destination", receiverPhoneNumber.ToNormalizedPhoneNumber().ToUrlEncoded() },
-                { "sender", senderName.ToUrlEncoded() },
-                { "content", text.ToUrlEncoded() }
-            };
-
-            var endpoint = $"{_options.BaseUrl}/v2/send?{string.Join("&", queryParams.Select(kvp => $"{kvp.Key}={kvp.Value}"))}";
-
-            return await MakeHttpGetRequest<SendSmsResult>(endpoint);
+            return await _api.SendSms(_options.ApiKey, receiverPhoneNumber.ToNormalizedPhoneNumber().ToUrlEncoded(), senderName.ToUrlEncoded(), text.ToUrlEncoded());
         }
 
         public async Task<int> GetBalance()
         {
-            var endpoint = $"{_options.BaseUrl}/getBalance?key={_options.ApiKey}";
-
-            return await MakeHttpGetRequest<int>(endpoint);
-        }
-
-        private async Task<T> MakeHttpGetRequest<T>(string endpoint)
-        {
-            var httpResponseMessage = await _httpClient.GetAsync(endpoint);
-
-            httpResponseMessage.EnsureSuccessStatusCode();
-
-            return await httpResponseMessage.Content.ReadFromJsonAsync<T>();
+            return await _api.GetBalance(_options.ApiKey);
         }
     }
 }

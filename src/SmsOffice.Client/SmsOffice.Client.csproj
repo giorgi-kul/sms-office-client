@@ -8,7 +8,7 @@
     <PackageProjectUrl>https://github.com/giorgi-kul/sms-office-client</PackageProjectUrl>
     <Title>SmsOffice .NET Library</Title>
     <Description>.NET Library for sending SMS via smsoffice.ge</Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="RestEase" Version="1.6.1" />
   </ItemGroup>
 
 </Project>
